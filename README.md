@@ -296,7 +296,7 @@ space-tourism/
 
 ## Links
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://knightlyworks.github.io/space-tourism/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://knightlyworks.github.io/space-tourism-multi-page-website/)
 
 ## Author
 
