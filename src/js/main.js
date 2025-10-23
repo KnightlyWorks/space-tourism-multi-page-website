@@ -22,7 +22,7 @@ document.addEventListener("alpine:init", async () => {
     },
   });
 
-  const rawData = await fetchData("/data/data.json");
+  const rawData = await fetchData("data/data.json");
 
   // Используем данные как есть, без мутации путей
   console.log(rawData);

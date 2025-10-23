@@ -3300,7 +3300,7 @@ document.addEventListener("alpine:init", async () => {
       return this.currentPage === page;
     }
   });
-  const rawData = await fetchData("/data/data.json");
+  const rawData = await fetchData("data/data.json");
   console.log(rawData);
   module_default.store("data", {
     destinations: rawData.destinations,
