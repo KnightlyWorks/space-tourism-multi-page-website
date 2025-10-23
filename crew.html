@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png" />
+    <link href="./src/styles/tailwind.css" rel="stylesheet" />
+
+    <title>Frontend Mentor | Space tourism website</title>
+  </head>
+  <body
+    class="relative mx-auto min-h-screen w-full overflow-y-auto bg-[url('../../assets/crew/background-crew-mobile.jpg')] bg-cover bg-no-repeat pt-300 md:bg-[url('../../assets/crew/background-crew-tablet.jpg')] lg:bg-[url('../../assets/crew/background-crew-desktop.jpg')]"
+  >
+    <header class="flex size-12 h-fit w-full flex-row items-center justify-between px-300 md:pr-0">
+      <a href="./index.html">
+        <img class="size-500 md:mr-500" src="./assets/shared/logo.svg" alt="logo" />
+      </a>
+
+      <!--Mobile nav menu-->
+      <nav x-data="{hamburger : false}" :aria-expanded="hamburger" class="block md:hidden">
+        <button @click="hamburger = !hamburger" aria-controls="mobile-menu">
+          <img
+            class="relative z-20"
+            :src="hamburger ? '../assets/shared/icon-close.svg' : '../assets/shared/icon-hamburger.svg'"
+            alt="humberger menu"
+          />
+        </button>
+
+        <div
+          x-show="hamburger"
+          x-transition.opacity.duration.300ms
+          id="mobile-menu"
+          class="fixed top-0 right-0 z-10 h-screen w-2/3 bg-[#0B0D17]/15 backdrop-blur-3xl"
+        >
+          <div
+            class="nav-links nav-links-mobile absolute top-[15.11%] right-0 left-400 flex flex-col items-start gap-400"
+          >
+            <a
+              href="./index.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'index.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'index.html'"
+            >
+              <span class="text-preset-8-bold">00</span>
+              HOME
+            </a>
+            <a
+              href="./destination.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'destination.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'destination.html'"
+            >
+              <span class="text-preset-8-bold">01</span>
+              Destination
+            </a>
+            <a
+              href="./crew.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'crew.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'crew.html'"
+            >
+              <span class="text-preset-8-bold">02</span>
+              Crew
+            </a>
+            <a
+              href="./technology.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'technology.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'technology.html'"
+            >
+              <span class="text-preset-8-bold">03</span>
+              Technology
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <!--Tablet/desktop menu-->
+      <div
+        class="relative hidden h-px w-[calc(100%-var(--spacing-1000))] translate-x-600 bg-white/5 lg:block"
+      ></div>
+
+      <nav
+        class="nav-links-desktop hidden h-1200 w-full max-w-2xl items-center justify-end gap-600 bg-white/5 px-500 md:flex [&>div]:relative"
+      >
+        <a
+          href="./index.html"
+          class="text-preset-8 self-center uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'index.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <!--Why x-bind:class="$store.navigation.currentPage === 'destination.html' && 'active-link-desktop'" is not works?-->
+          <span class="text-preset-8-bold">00</span>
+          HOME
+        </a>
+
+        <a
+          href="./destination.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'destination.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">01</span>
+          Destination
+        </a>
+
+        <a
+          href="./crew.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'crew.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">02</span>
+          Crew
+        </a>
+
+        <a
+          href="./technology.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'technology.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">03</span>
+          Technology
+        </a>
+      </nav>
+    </header>
+
+    <main
+      class="flex flex-col items-center justify-start gap-100 p-300 lg:px-0 lg:py-600"
+      x-data="{
+      pageData: [],
+      curretTab: 'Douglas Hurley' 
+    }"
+      x-init="    
+      $watch('$store.data', value => {
+        if (value?.crew) pageData = value.crew
+      })"
+    >
+      <template x-for="(crew, index) in pageData" :key="index">
+        <article
+          x-show="curretTab === crew['name']"
+          x-transition:enter="transition-all ease-out duration-600"
+          x-transition:enter-start="opacity-0 translate-y-12 scale-x-70 scale-y-80"
+          x-transition:enter-end="opacity-100 -translate-y-0 scale-100"
+          :aria-labelledby="'id' + index"
+          class="flex flex-col gap-300 lg:h-[89.18%] lg:w-[76.4%]"
+        >
+          <h2>
+            <span
+              class="text-[16px] font-bold tracking-[15%] text-white/25 sm:text-[20px] lg:text-[28px]"
+            >
+              02
+            </span>
+            <span class="text-mobile-preset-6 sm:text-tablet-preset-5 lg:text-preset-5">
+              MEET YOUR CREW
+            </span>
+          </h2>
+
+          <figure class="flex flex-col gap-400 lg:flex-row">
+            <figcaption
+              class="flex flex-col gap-500 pt-500 text-center text-balance lg:w-1/2 lg:text-left xl:justify-evenly"
+            >
+              <div class="flex flex-col gap-300">
+                <div class="space-y-100">
+                  <p
+                    class="text-mobile-preset-4 sm:text-tablet-preset-4 lg:text-preset-4 text-white/50 uppercase"
+                    x-text="crew['role']"
+                  ></p>
+                  <h3
+                    :id="'id' + index"
+                    class="text-mobile-preset-3 sm:text-tablet-preset-3 lg:text-preset-3 uppercase"
+                    x-text="crew['name']"
+                  ></h3>
+                </div>
+
+                <p
+                  class="text-mobile-preset-9 sm:text-tablet-preset-9 lg:text-preset-9 text-center text-blue-300 lg:text-left"
+                  x-text="crew['bio']"
+                ></p>
+              </div>
+
+              <div role="tablist" class="flex justify-center gap-200 lg:justify-start lg:pt-1000">
+                <template x-for="(crew,index) in pageData" :key="index">
+                  <button
+                    @click="curretTab = crew['name']"
+                    :aria-label="crew['name']"
+                    role="tab"
+                    :aria-selected="curretTab === crew['name']"
+                    class="hocus:bg-white/50 hocus:animate-dot-pulse size-4 rounded-full bg-white/25"
+                    x-bind:class="curretTab === crew['name'] && 'bg-white!'"
+                  ></button>
+                </template>
+              </div>
+            </figcaption>
+
+            <picture class="flex flex-col items-center lg:w-1/2">
+              <source :srcset="crew['images']['png']" />
+              <img :src="crew['images']['webp']" :alt="crew['name']" />
+            </picture>
+          </figure>
+        </article>
+      </template>
+    </main>
+
+    <script src="dist/bundle.js" type="module"></script>
+  </body>
+</html>

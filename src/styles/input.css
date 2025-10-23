@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400&family=Barlow+Condensed:wght@400;700&family=Bellefair&display=swap");
+
+@import "tailwindcss";
+
+@variant hocus (&:hover, &:focus);
+
+@theme {
+  --color-white: #ffffff;
+  --color-blue-300: #d0d6f9;
+  --color-blue-900: #0b0d17;
+  --spacing-100: 8px;
+  --spacing-200: 16px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+  --spacing-1200: 96px;
+  --spacing-1600: 128px;
+  --spacing-50: 4px;
+  --spacing-25: 2px;
+  --spacing-150: 12px;
+
+  --animate-ring: ring-pulse 2s ease-out infinite;
+  --animate-dot-pulse: dot-pulse 3s ease-out infinite;
+
+  @keyframes ring-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 88px rgba(255, 255, 255, 0);
+    }
+  }
+
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply max-w-[2000px] text-white antialiased;
+    line-height: normal;
+    letter-spacing: normal;
+    font-family: "Barlow Condensed", sans-serif;
+  }
+}
+
+@layer components {
+  .nav-links-mobile a:hover,
+  .nav-links-mobile a:focus {
+    @apply relative text-left after:absolute after:right-0 after:h-full after:w-1 after:translate-x-1/2 after:bg-white/50 after:content-[''];
+  }
+
+  .active-link {
+    @apply relative text-left after:absolute after:right-0 after:h-full after:w-1 after:translate-x-1/2 after:bg-white after:content-[''];
+  }
+
+  .nav-links-desktop a:hover,
+  .nav-links-desktop a:focus {
+    @apply relative after:absolute after:-bottom-500 after:left-1/2 after:h-1 after:w-full after:-translate-x-1/2 after:bg-white/50 after:content-[''];
+  }
+
+  .active-link-desktop {
+    @apply relative after:absolute after:-bottom-500 after:left-1/2 after:h-1 after:w-full after:-translate-x-1/2 after:bg-white after:content-[''];
+  }
+}
+
+/* Bellefair Desktop */
+@utility text-preset-1 {
+  font-family: "Bellefair", serif;
+  @apply text-[144px];
+}
+@utility text-preset-2 {
+  font-family: "Bellefair", serif;
+  @apply text-[96px];
+}
+@utility text-preset-3 {
+  font-family: "Bellefair", serif;
+  @apply text-[56px];
+}
+@utility text-preset-4 {
+  font-family: "Bellefair", serif;
+  @apply text-[32px];
+}
+@utility text-preset-6 {
+  font-family: "Bellefair", serif;
+  @apply text-[28px];
+}
+
+/* Barlow Condensed Desktop */
+@utility text-preset-5 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[28px] tracking-[4px];
+}
+@utility text-preset-7 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[14px] tracking-[2px];
+}
+@utility text-preset-8 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[16px] tracking-[2px];
+}
+@utility text-preset-8-bold {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[16px] font-bold tracking-[2.7px];
+}
+
+/* Barlow Desktop Body */
+@utility text-preset-9 {
+  font-family: "Barlow", sans-serif;
+  @apply text-[18px] leading-[1.8];
+}
+
+/* Bellefair Mobile */
+@utility text-mobile-preset-1 {
+  font-family: "Bellefair", serif;
+  @apply text-[80px];
+}
+@utility text-mobile-preset-2 {
+  font-family: "Bellefair", serif;
+  @apply text-[56px];
+}
+@utility text-mobile-preset-3 {
+  font-family: "Bellefair", serif;
+  @apply text-[24px];
+}
+@utility text-mobile-preset-4 {
+  font-family: "Bellefair", serif;
+  @apply text-[18px];
+}
+
+/* Barlow Condensed Mobile */
+@utility text-mobile-preset-6 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[16px] tracking-[2.4px];
+}
+@utility text-mobile-preset-8 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[14px] tracking-[2.1px];
+}
+
+/* Barlow Mobile Body */
+@utility text-mobile-preset-9 {
+  font-family: "Barlow", sans-serif;
+  @apply text-[15px] leading-[1.8];
+}
+
+/* Bellefair Tablet */
+@utility text-tablet-preset-2 {
+  font-family: "Bellefair", serif;
+  @apply text-[80px];
+}
+@utility text-tablet-preset-3 {
+  font-family: "Bellefair", serif;
+  @apply text-[40px];
+}
+@utility text-tablet-preset-4 {
+  font-family: "Bellefair", serif;
+  @apply text-[24px];
+}
+
+/* Barlow Condensed Tablet */
+@utility text-tablet-preset-5 {
+  font-family: "Barlow Condensed", sans-serif;
+  @apply text-[20px] tracking-[3px];
+}
+
+/* Barlow Tablet Body */
+@utility text-tablet-preset-9 {
+  font-family: "Barlow", sans-serif;
+  @apply text-[16px] leading-[1.8];
+}
+
+@layer utilities {
+  .text-blue-300::selection {
+    background-color: #0b0d17;
+    color: white;
+  }
+}

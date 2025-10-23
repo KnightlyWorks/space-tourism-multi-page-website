@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png" />
+    <link href="./src/styles/tailwind.css" rel="stylesheet" />
+
+    <title>Frontend Mentor | Space tourism website</title>
+  </head>
+  <body
+    class="relative mx-auto h-screen w-full overflow-y-hidden bg-[url('../../assets/destination/background-destination-mobile.jpg')] bg-cover bg-no-repeat md:bg-[url('../../assets/destination/background-destination-tablet.jpg')] lg:bg-[url('../../assets/destination/background-destination-desktop.jpg')]"
+  >
+    <header class="flex size-12 h-fit w-full flex-row items-center justify-between px-300 md:pr-0">
+      <a href="./index.html">
+        <img class="size-500 md:mr-500" src="./assets/shared/logo.svg" alt="logo" />
+      </a>
+
+      <!--Mobile nav menu-->
+      <nav x-data="{hamburger : false}" :aria-expanded="hamburger" class="block md:hidden">
+        <button @click="hamburger = !hamburger" aria-controls="mobile-menu">
+          <img
+            class="relative z-20"
+            :src="hamburger ? '../assets/shared/icon-close.svg' : '../assets/shared/icon-hamburger.svg'"
+            alt="humberger menu"
+          />
+        </button>
+
+        <div
+          x-show="hamburger"
+          x-transition.opacity.duration.300ms
+          id="mobile-menu"
+          class="fixed top-0 right-0 z-10 h-screen w-2/3 bg-[#0B0D17]/15 backdrop-blur-3xl"
+        >
+          <div
+            class="nav-links nav-links-mobile absolute top-[15.11%] right-0 left-400 flex flex-col items-start gap-400"
+          >
+            <a
+              href="./index.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'index.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'index.html'"
+            >
+              <span class="text-preset-8-bold">00</span>
+              HOME
+            </a>
+            <a
+              href="./destination.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'destination.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'destination.html'"
+            >
+              <span class="text-preset-8-bold">01</span>
+              Destination
+            </a>
+            <a
+              href="./crew.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'crew.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'crew.html'"
+            >
+              <span class="text-preset-8-bold">02</span>
+              Crew
+            </a>
+            <a
+              href="./technology.html"
+              class="text-preset-8 w-full uppercase"
+              x-bind:class="$store.navigation.currentPage === 'technology.html' && 'active-link'"
+              @click="$store.navigation.currentPage = 'technology.html'"
+            >
+              <span class="text-preset-8-bold">03</span>
+              Technology
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <!--Tablet/desktop menu-->
+      <div
+        class="relative hidden h-px w-[calc(100%-var(--spacing-1000))] translate-x-600 bg-white/5 lg:block"
+      ></div>
+
+      <nav
+        class="nav-links-desktop hidden h-1200 w-full max-w-2xl items-center justify-end gap-600 bg-white/5 px-500 md:flex [&>div]:relative"
+      >
+        <a
+          href="./index.html"
+          class="text-preset-8 self-center uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'index.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <!--Why x-bind:class="$store.navigation.currentPage === 'destination.html' && 'active-link-desktop'" is not works?-->
+          <span class="text-preset-8-bold">00</span>
+          HOME
+        </a>
+
+        <a
+          href="./destination.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'destination.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">01</span>
+          Destination
+        </a>
+
+        <a
+          href="./crew.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'crew.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">02</span>
+          Crew
+        </a>
+
+        <a
+          href="./technology.html"
+          class="text-preset-8 uppercase"
+          x-bind:class="{ 'active-link-desktop': $store.navigation.currentPage === 'technology.html' }"
+          x-init="$nextTick(() => {})"
+        >
+          <span class="text-preset-8-bold">03</span>
+          Technology
+        </a>
+      </nav>
+    </header>
+
+    <main
+      class="px-500 md:py-500 lg:py-600"
+      x-data="{
+      pageData: [],
+      curretTab: 'Moon' 
+
+    }"
+      x-init="    
+      $watch('$store.data', value => {
+        if (value?.destinations) pageData = value.destinations
+      })
+  "
+    >
+      <h2 class="sm:text-tablet-preset-5 text-center sm:mb-300 sm:text-left">
+        <span class="font-bold opacity-25">01</span>
+        <strong class="text-mobile-preset-6 sm:text-tablet-preset-5 uppercase">
+          PICK YOUR DESTINATION
+        </strong>
+      </h2>
+      <template x-for="(destination, index) in pageData" :key="index">
+        <figure
+          :aria-labelledby="'id' + index"
+          x-show="curretTab === destination['name']"
+          x-transition:enter="transition-all ease-out duration-800"
+          x-transition:enter-start="opacity-10 -translate-y-8 scale-85"
+          x-transition:enter-end="opacity-100 -translate-y-0 scale-100"
+          x-cloak
+          class="flex flex-col items-center p-300 lg:flex-row lg:justify-center lg:gap-400"
+        >
+          <picture>
+            <source :srcset="destination['images']['png']" />
+            <img
+              class="mb-13 size-[150px] sm:size-[300px] lg:size-[480px]"
+              :src="destination['images']['webp']"
+              alt=""
+            />
+          </picture>
+
+          <div>
+            <div
+              role="tablist"
+              class="mb-300 flex justify-center gap-400 lg:mb-500 lg:justify-start"
+            >
+              <template x-for="(destenation, index) in pageData" :key="index">
+                <button
+                  class="text-mobile-preset-8 sm:text-preset-8 hocus:scale-110 text-blue-300"
+                  role="tab"
+                  x-text="destenation['name']"
+                  :aria-selected="curretTab === destenation['name']"
+                  x-bind:class="curretTab === destenation['name'] && 'active-link-desktop after:-bottom-[15px] text-white!'"
+                  @click="curretTab = destenation['name']"
+                ></button>
+              </template>
+            </div>
+            <figcaption class="text-center text-balance lg:text-left">
+              <h3
+                class="text-preset-2 sm:text-tablet-preset-2 uppercase"
+                :id="'id' + index"
+                x-text="destination['name']"
+              ></h3>
+              <p
+                class="text-mobile-preset-9 sm:text-tablet-preset-9 max-w-[60ch] text-blue-300 lg:mt-400"
+                x-text="destination['description']"
+              ></p>
+
+              <div class="my-300 h-px w-full bg-[#979797] lg:my-500"></div>
+
+              <div class="flex flex-col sm:flex-row sm:gap-300 [&>*]:w-full">
+                <p class="mt-300 flex flex-col space-y-150">
+                  <span class="text-preset-7 text-blue-300 uppercase">AVG. DISTANCE</span>
+                  <span class="text-preset-6" x-text="destination['distance']"></span>
+                </p>
+                <p class="mt-300 flex flex-col space-y-150">
+                  <span class="text-preset-7 text-blue-300">Est. travel time</span>
+                  <span
+                    class="text-preset-6 uppercase"
+                    x-text="destination['travel'].replace(/\b\w/g, char => char.toUpperCase())"
+                  ></span>
+                </p>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+      </template>
+    </main>
+    <script src="dist/bundle.js" type="module"></script>
+  </body>
+</html>
