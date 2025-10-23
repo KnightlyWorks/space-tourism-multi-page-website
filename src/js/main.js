@@ -1,5 +1,7 @@
 import Alpine from "alpinejs";
 
+const basePath = location.hostname === "localhost" ? "" : "/space-tourism-multi-page-website";
+
 async function fetchData(url) {
   try {
     const response = await fetch(url);
@@ -22,11 +24,13 @@ document.addEventListener("alpine:init", async () => {
     },
   });
 
-  const rawData = await fetchData("data/data.json");
+  // Fetch JSON с учётом basePath
+  const rawData = await fetchData(`${basePath}/data/data.json`);
+  if (!rawData) return; // Если fetch упал, прекращаем
 
-  // Используем данные как есть, без мутации путей
-  console.log(rawData);
+  console.log("Fetched data:", rawData);
 
+  // Сохраняем данные в Alpine.store без изменений путей
   Alpine.store("data", {
     destinations: rawData.destinations,
     crew: rawData.crew,

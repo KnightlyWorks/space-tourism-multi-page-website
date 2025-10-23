@@ -325,13 +325,13 @@ function collapseProxies() {
 }
 function initInterceptors(data2) {
   let isObject2 = (val) => typeof val === "object" && !Array.isArray(val) && val !== null;
-  let recurse = (obj, basePath = "") => {
+  let recurse = (obj, basePath2 = "") => {
     Object.entries(Object.getOwnPropertyDescriptors(obj)).forEach(([key, { value, enumerable }]) => {
       if (enumerable === false || value === void 0)
         return;
       if (typeof value === "object" && value !== null && value.__v_skip)
         return;
-      let path = basePath === "" ? key : `${basePath}.${key}`;
+      let path = basePath2 === "" ? key : `${basePath2}.${key}`;
       if (typeof value === "object" && value !== null && value._x_interceptor) {
         obj[key] = value.initialize(data2, path, key);
       } else {
@@ -3281,6 +3281,7 @@ var src_default = alpine_default;
 var module_default = src_default;
 
 // src/js/main.js
+var basePath = location.hostname === "localhost" ? "" : "/space-tourism-multi-page-website";
 async function fetchData(url) {
   try {
     const response = await fetch(url);
@@ -3300,8 +3301,9 @@ document.addEventListener("alpine:init", async () => {
       return this.currentPage === page;
     }
   });
-  const rawData = await fetchData("data/data.json");
-  console.log(rawData);
+  const rawData = await fetchData(`${basePath}/data/data.json`);
+  if (!rawData) return;
+  console.log("Fetched data:", rawData);
   module_default.store("data", {
     destinations: rawData.destinations,
     crew: rawData.crew,
